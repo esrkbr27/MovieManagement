@@ -1,0 +1,128 @@
+1)https://automationqahub.com/how-to-use-cucumber-with-cypress-10-and-above/ 
+
+sayfasında cpress 10 versiyonu üzeri için kurulum kodları mevcuttur.
+
+Table of Contents
+How To Integrate Cucumber With Cypress
+Prerequisite
+Installation
+Create Feature and Spec File
+Configure feature file and step definition path
+Execute Script
+How to run Cypress Cucumber tests using Tags
+
+----------------------------------0-----------------------------------
+
+How To Integrate Cucumber With Cypress
+Cucumber is a behaviour-driven development framework that uses plain English to define the behaviour of the application which helps in bridging the gap between the business stakeholders and technical team.
+
+Prerequisite
+1)Node.js
+2)VSCode
+
+Installation
+1)Create an empty folder
+
+Open this folder in VS code and initialize it.
+
+npm init
+Answer the basic questions like name, and description and keep pressing enter, a package.json will be generated with the provided information and added to the project.
+
+2)Install Cypress v10
+
+npm install cypress — save-dev
+This command will install Cypress’s latest version in package.json.
+
+3)Install Cucumber
+
+First, install the cucumber support plugin in VS code.
+
+1. Go to the visual studio marketplace and install Cucumber(Gherkin) Plugin.
+
+2. Restart the visual studio code to apply changes.
+
+Next, install the Cypress BDD dependency. Go to this link and follow the steps.
+
+Install the cypress cucumber preprocessor using npm.
+npm install @badeball/cypress-cucumber-preprocessor
+2. Install browserify-preprocessor dependency using npm.
+
+npm install @cypress/browserify-preprocessor
+This dependency basically helps the preprocessor to interact with Cypress with the browser.
+
+3. Next go to cypress.config.js and add the below configuration.
+
+const preprocessor = require("@badeball/cypress-cucumber-preprocessor");
+const browserify = require("@badeball/cypress-cucumber-preprocessor/browserify");
+
+async function setupNodeEvents(on, config) {
+  // This is required for the preprocessor to be able to generate JSON reports after each run, and more,
+await preprocessor.addCucumberPreprocessorPlugin(on, config);
+on("file:preprocessor", browserify.default(config));
+return config;
+}
+
+Create Feature and Spec File
+1.Go to the cypress Project –>Open e2e Folder –>Right click–>Create New Folder and name it as “bdd-cucumber”
+Open “bdd-cucumber” and create two more folders inside it .one for feature files and another for step definition.
+
+Now Go to the features folder and create a feature file “login. feature” and add scenarios inside this feature file in plain Gherkin language.
+
+Feature: Login
+Scenario: Login user with correct email and password
+Given I navigate to automation exercise website
+When I enter login credentials
+Then I should be logged in
+
+
+2.Configure feature file and step definition path
+Open the package.json file and under the cypress-cucumber-preprocessor node add the step definition path.
+ "cypress-cucumber-preprocessor": {
+    "stepDefinitions": "cypress/e2e/bdd-cucumber/step-defination/*.js",
+    "filterSpecs": true,
+    "omitFiltered": true
+   }
+   
+   
+ Go to Cypress. config.js file and under the module. export add feature file path.
+
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents,
+    baseUrl:'your url',
+    specPattern: "cypress/e2e/bdd-cucumber/features/*.feature",
+    watchForFileChanges:false,
+    chromeWebSecurity: false,
+    experimentalModifyObstructiveThirdPartyCode: true,
+    defaultCommandTimeout: 10000
+ },
+});
+
+
+Create a step definition file 'login.js' inside the step-definition folder and add the below code.
+import {Given, When, Then} from '@badeball/cypress-cucumber-preprocessor';
+
+Given('I navigate to automation exercise website', () => {
+cy.visit('https://automationexercise.com/');
+
+})
+
+When('I enter login credentials', () => {
+cy.get('a[href="/login"]').click();
+cy.contains('Login to your account').should('be.visible');
+cy.get('input[data-qa="login-email"]').type('example1@test.com');
+cy.get('input[data-qa="login-password"]').type('foobar');
+cy.get('button[data-qa="login-button"]').click();
+
+})
+Then('I should be logged in', () => {
+cy.contains('Logged in as').should('be.visible');
+
+})
+
+
+
+-------------------------0----------------------------
+NOT:feature file dosya ismi ile stepdefinations klasörünün ismi ile aynı olmak zorundadır.
+
+
