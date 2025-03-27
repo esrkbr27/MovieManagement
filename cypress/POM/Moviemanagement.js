@@ -3,8 +3,6 @@ export class MovieManagement {
  
 
     addMovie (){
-    
-   
 
      cy.get('.flex-col > [href="/manager/movies"]').click();
      cy.get('.self-end > .bg-primary').click();
