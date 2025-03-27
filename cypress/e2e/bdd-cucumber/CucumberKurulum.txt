@@ -17,8 +17,9 @@ How To Integrate Cucumber With Cypress
 Cucumber is a behaviour-driven development framework that uses plain English to define the behaviour of the application which helps in bridging the gap between the business stakeholders and technical team.
 
 Prerequisite
-1)Node.js
+1)Node.js (node.js.org)
 2)VSCode
+3)Cypress 
 
 Installation
 1)Create an empty folder
@@ -32,6 +33,10 @@ Answer the basic questions like name, and description and keep pressing enter, a
 
 npm install cypress — save-dev
 This command will install Cypress’s latest version in package.json.
+But Cypress 13.16.0 version is better than latest version for cucumber framework.
+
+npx cypress open
+This command will open cypress 
 
 3)Install Cucumber
 

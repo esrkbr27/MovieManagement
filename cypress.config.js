@@ -20,7 +20,7 @@ return config;
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents,
-    baseUrl:'https://digiturksite.kartega.com/',
+    baseUrl:'https://qa-assignment-fe-fb175f1879ab.herokuapp.com/ ',
     specPattern: "cypress/e2e/bdd-cucumber/features/*.feature",
     watchForFileChanges:false,
     chromeWebSecurity: false,
