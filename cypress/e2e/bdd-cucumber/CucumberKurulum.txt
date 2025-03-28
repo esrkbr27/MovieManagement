@@ -1,6 +1,5 @@
 1)https://automationqahub.com/how-to-use-cucumber-with-cypress-10-and-above/ 
 
-sayfasında cpress 10 versiyonu üzeri için kurulum kodları mevcuttur.
 
 Table of Contents
 How To Integrate Cucumber With Cypress
